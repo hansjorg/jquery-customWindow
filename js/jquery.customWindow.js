@@ -962,7 +962,7 @@
                     // set it as absolute positioned
                     $(this).css("position", "absolute");
 
-                    // set class marking this window as being dragged
+                    // add class marking this window as being dragged
                     $(this).addClass("customWindowDragging");
                     
                     // set z-index
@@ -1045,7 +1045,7 @@
                 
                 $(_resizeable).css("cursor", "");
                 
-                // set current drag status
+                // set current resize status
                 _resizeStatus[_resizeable.id] = "handler";
                 
                 $(handler).css("cursor", options.cursor);
@@ -1053,7 +1053,6 @@
                 // bind event handler
                 handler.bind('mousedown', function(e){
                     _holdingHandler = true;
-
                 });
                 
                 // bind event handler
@@ -1063,7 +1062,7 @@
             });
         };
         
-        // updates the position of the current element being dragged
+        // updates the size of the current element being resized
         var updateSize = function (e, id) {         
             var width = e.pageX + _deltaLeft - _offsetX;
             var height = e.pageY + _deltaTop - _offsetY;
@@ -1116,17 +1115,26 @@
                 
                 _bubblings2[this.id] = options.allowBubbling ? true : false;
                 
-                // set dragStatus 
+                // set resizeStatus 
                 _resizeStatus[domElement.id] = "on";
                 
                 $(this).css("cursor", options.cursor);
-                
+
+                // when an elemnt is let go
+                $(this).bind("mouseup", function(e) {
+                    // remove class marking this window as being resized
+                    $(this).removeClass('customWindowResizing');
+                });
+
                 // when an element receives a mouse press
                 $(this).bind("mousedown", function (e) {
                     
-                    // if drag status is off, break
+                    // if resize status is off, break
                     if((_resizeStatus[this.id] == "off") || (_resizeStatus[this.id] == "handler" && !_holdingHandler))
                         return _bubblings2[this.id];
+
+                    // add class marking thiw window as being resized
+                    $(this).addClass('customWindowResizing');
 
                     // update track variables
                     _isMouseDown = true;
@@ -1147,7 +1155,7 @@
                     
                     // update the position
                     updateSize(e, options.win);
-                    
+                   
                     return _bubblings2[this.id];
                 });
             });
