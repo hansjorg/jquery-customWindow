@@ -25,26 +25,28 @@
     <script type="text/javascript" src="../js/jquery.customWindow.js"></script>
     <script type="text/javascript">
         $(function(){
+            function openWindow(title) {
+                $.customWindow({
+                    title: title,
+                    onopen: function (cont, obj) {
+                        cont.html($('#test-content').html());
+                    },
+                    onclose: function () { 
+                        alert('close -' + i); 
+                    },
+                    onresize: function (obj) {
+                        alert(obj.container.attr('id'));
+                    }
+                    });
+            }
+
 	        var i = 1;
-	        var win = $.customWindow({
-			    title: 'Window ' + i,
-			    onopen: function (cont, obj) {
-				    cont.html($('#test-content').html());
-			    },
-			    onclose: function () { 
-				    alert('close -' + i); 
-			    },
-			    onresize: function (obj) {
-				    alert(obj.container.attr('id'));
-			    }
-		    });
+            var win = openWindow('Window ' + i); 
 	
 	        $('a.openWin').each(function () {
 		        $(this).bind('click', function (e) { 
-					i++; 
-					$.customWindow({
-						title: 'Window ' + i
-					}); 
+                    i++;
+                    openWindow('Window ' + i);
 				});
 			});
         });

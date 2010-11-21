@@ -39,10 +39,6 @@
  * Thanks for the community that is helping the improvement
  * of this little piece of code.
  *
- * Thanks to: http://fromvega.com/scripts for drag effect.
- * Thanks for the community that is helping the improvement
- * of this little piece of code.
- *
  * Version: 1.0.0
  * Date: 9th Nov, 2009
  * 
@@ -933,7 +929,7 @@
         $(document).bind("mouseup", function (e) {
             if (_isMouseDown === true && _dragStatus[_currentElement.id] !== 'off') {
                 _isMouseDown = false;
-                
+ 
                 return false;
             }
         });
@@ -947,6 +943,14 @@
                 
                 // set dragStatus 
                 _dragStatus[domElement.id] = "on";
+
+                // when an element is let go after dragging
+                $(this).bind("mouseup", function(e) {
+                    // remove class marking this window as being dragged
+                    $(this).removeClass("customWindowDragging");
+
+                    return _bubblings[this.id];
+                });
                 
                 // when an element receives a mouse press
                 $(this).bind("mousedown", function (e) {
@@ -957,6 +961,9 @@
                     
                     // set it as absolute positioned
                     $(this).css("position", "absolute");
+
+                    // set class marking this window as being dragged
+                    $(this).addClass("customWindowDragging");
                     
                     // set z-index
                     $(this).maxZIndex({ inc: 5, group: '.customWindowContainer' });

@@ -16,6 +16,13 @@
 	border: 1px solid #7fa2e6;
 }
 
+.customWindowDragging {
+  filter: alpha(opacity=50); /* internet explorer */
+	-khtml-opacity: 0.5;       /* khtml, old safari */
+	-moz-opacity: 0.5;         /* mozilla, netscape */
+	opacity: 0.5;              /* fx, safari, opera */
+}
+
 .unselectWindow {
 	background: #7fa2e6 url(../images/headh.gif) repeat-x left top;
 	border: 1px solid #0056e8;
