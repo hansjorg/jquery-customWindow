@@ -405,7 +405,9 @@
                     
                     setBehind(this.id);
                     
-                    return false;
+                    // Must return true to let events bubble. Otherwise it
+                    // becomes impossible to interact with window content.
+                    return true;
         });
         
         // WINDOW PARAM

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>jQuery customWindow plugin (input elements test)</title>
+    <link rel="stylesheet" href="../css/jquery.customWindow.css" type="text/css"/>
+    <style>
+      html, body {
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        overflow: hidden;
+      }
+      .code {
+        border: 1px solid #CC0000;
+        background: #FFFFCC;
+        padding: 10px;
+        width: 40%;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+      }
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.corner.js"></script>
+    <script type="text/javascript" src="../js/jquery.customWindow.js"></script>
+    <script type="text/javascript">
+        $(function(){
+	        var i = 1;
+	        var win = $.customWindow({
+			    title: 'Window ' + i,
+			    onopen: function (cont, obj) {
+				    cont.html($('#test-content').html());
+			    },
+			    onclose: function () { 
+				    alert('close -' + i); 
+			    },
+			    onresize: function (obj) {
+				    alert(obj.container.attr('id'));
+			    }
+		    });
+	
+	        $('a.openWin').each(function () {
+		        $(this).bind('click', function (e) { 
+					i++; 
+					$.customWindow({
+						title: 'Window ' + i
+					}); 
+				});
+			});
+        });
+    </script>
+  </head>
+
+  <body>
+    <div style="height: 100%; overflow: auto;">
+      <p>
+        <a href="javascript: void(0);" class="openWin">Click to open a window</a>
+      </p>
+    </div>
+    <div style="display: none;">
+      <form id="test-content">
+        <input type="text" name="text-input"/>
+        <select name="select">
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+        </select>
+        <input type="submit" value="Submit"/>
+      </form>
+    </div>
+  </body>
+</html>
