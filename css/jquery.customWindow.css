@@ -1,0 +1,118 @@
+@charset "utf-8";
+/* CSS Document */
+
+* html {
+	overflow-y: hidden;
+}
+
+* html body {
+	overflow: auto;
+	height: 100%;
+}
+
+.customWindowContainer {
+	background: #0056e8 url(../images/head.gif) repeat-x left top;
+	padding: 3px;
+	border: 1px solid #7fa2e6;
+}
+
+.unselectWindow {
+	background: #7fa2e6 url(../images/headh.gif) repeat-x left top;
+	border: 1px solid #0056e8;
+}
+
+.customWindowStatus {
+	height: 16px;
+	background: #ECE9D8;
+}
+
+.customWindowResize {
+	display: block;
+	float: right;
+	width: 16px;
+	height: 16px;
+	background: url(../images/resize.gif) no-repeat center center;
+}
+
+.unselectWindow .customWindowResize {
+	display: none;
+}
+
+.customWindowHead {
+	height: 26px;
+}
+
+.customWindowMaximize {
+	display: block;
+	float: right;
+	width: 21px;
+	height: 21px;
+	background: url(../images/maximize.gif) no-repeat center center;
+	margin: 1px 3px 0px 0px;
+	border: 0;
+	padding: 0px;
+	cursor: pointer;
+}
+
+.customWindowRestore {
+	display: block;
+	float: right;
+	width: 21px;
+	height: 21px;
+	background: url(../images/restore.gif) no-repeat center center;
+	margin: 1px 3px 0px 0px;
+	border: 0;
+	padding: 0px;
+	cursor: pointer;
+}
+
+.customWindowMinimize {
+	display: block;
+	float: right;
+	width: 21px;
+	height: 21px;
+	background: url(../images/minimize.gif) no-repeat center center;
+	margin: 1px 3px 0px 0px;
+	border: 0;
+	padding: 0px;
+	cursor: pointer;
+}
+
+.customWindowClose {
+	display: block;
+	float: right;
+	width: 21px;
+	height: 21px;
+	background: url(../images/close.gif) no-repeat center center;
+	margin: 1px 3px 0px 0px;
+	border: 0;
+	padding: 0px;
+	cursor: pointer;
+}
+
+.customWindowTitle {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	margin: 0px 0px 0px 3px;
+	border: 0px;
+	padding: 3px 0px 0px 26px;
+	background: url(../images/window.gif) no-repeat left bottom;
+	
+	font-family: "MS Sans Serif", Verdana, Arial, sans-serif;
+	font-size: 13px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	font-variant: normal;
+	text-transform: none;
+	color: #fff;
+	text-decoration: none;
+	line-height: 18px;
+}
+
+.customWindowcontent {
+	border: 1px solid #aca899;
+	padding: 8px;
+	background-color: #fff;
+}
