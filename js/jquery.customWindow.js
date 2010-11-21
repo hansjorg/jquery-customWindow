@@ -183,7 +183,7 @@
         }, options);
         
         var arrayPageScroll = [parseInt($(document).scrollLeft(), 10), parseInt($(document).scrollTop(), 10)];
-        var arrayViewPort = [parseInt($(window).width(), 10), parseInt($(window).height(), 10)];
+        var arrayViewPort = [parseInt($(_settings.appendTo).width(), 10), parseInt($(_settings.appendTo).height(), 10)];
                 
         // ID UNIQUE
         var _uniqueID = (_settings.windId) ? _settings.windId : "customWindowID_" + (new Date().getTime());
@@ -468,7 +468,7 @@
             var theClone = _wins[id].container.clone();
             
             _wins[id].container.css({
-                                position: 'fixed',
+                                position: 'absolute',
                                 top: null,
                                 bottom: 0,
                                 height: _wins[id].head.outerHeight() + 'px'
@@ -545,7 +545,7 @@
             if (indexMinimize >= 0) _isMinimize.splice(indexMinimize, 1);
                     
             var arrayPageScroll = [parseInt($(document).scrollLeft(), 10), parseInt($(document).scrollTop(), 10)];
-            var arrayViewPort = [parseInt($(window).width(), 10), parseInt($(window).height(), 10)];
+            var arrayViewPort = [parseInt($(_settings.appendTo).width(), 10), parseInt($(_settings.appendTo).height(), 10)];
             
             _wins[id].max = true;
             _wins[id].min = false;

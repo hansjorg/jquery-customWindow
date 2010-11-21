@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>jQuery customWindow plugin (input elements test)</title>
+    <title>jQuery customWindow plugin (contained in div test)</title>
     <link rel="stylesheet" href="../css/jquery.customWindow.css" type="text/css"/>
     <style>
       html, body {
@@ -27,10 +27,12 @@
         $(function(){
             function openWindow(title) {
                 $.customWindow({
+                    width: 350,
+                    height: 150,
+                    appendTo: '#window-container',
                     title: title,
-                    height: 200,
                     onopen: function (cont, obj) {
-                        cont.append($('#test-content'));
+                        cont.html($('#test-content').html());
                     }
                 });
             }
@@ -43,32 +45,21 @@
                     i++;
                     openWindow('Window ' + i);
 				});
-            });
-
-            $('#submit-button').bind('click', function(e) {
-                e.preventDefault();
-                alert('Value: ' + $('#text-input').val());
-            });
+			});
         });
     </script>
   </head>
 
   <body>
-    <div style="height: 100%; overflow: auto;">
+    <div style="height: 100%; overflow: auto; position: relative;">
       <p>
         <a href="javascript: void(0);" class="openWin">Click to open another window</a>
       </p>
-    </div>
-    <div style="display: none;">
-      <form id="test-content">
-        <p>Should be possible to enter text and click submit button</p>
-        <input id="text-input" type="text" name="text-input"/>
-        <select name="select">
-          <option value="1">Option 1</option>
-          <option value="2">Option 2</option>
-        </select>
-        <input id="submit-button" type="submit" value="Submit"/>
-      </form>
+      <div id="window-container" style="width: 80%; height: 70%; background-color: #aaaaaa; margin-left: 10%; overflow: hidden; position: relative;">
+      </div>
+      <div style="display: none;">
+        <div id="test-content"><h3>window contained within a div</h3></div>
+      </div>
     </div>
   </body>
 </html>
