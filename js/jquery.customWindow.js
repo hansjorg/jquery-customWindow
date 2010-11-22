@@ -181,9 +181,11 @@
             onclose: null,
             onresize: null
         }, options);
-        
+       
+        var _root = $(_settings.appendTo);
+
         var arrayPageScroll = [parseInt($(document).scrollLeft(), 10), parseInt($(document).scrollTop(), 10)];
-        var arrayViewPort = [parseInt($(_settings.appendTo).width(), 10), parseInt($(_settings.appendTo).height(), 10)];
+        var arrayViewPort = [parseInt(_root.width(), 10), parseInt(_root.height(), 10)];
                 
         // ID UNIQUE
         var _uniqueID = (_settings.windId) ? _settings.windId : "customWindowID_" + (new Date().getTime());
@@ -207,7 +209,7 @@
         _customWindowHtml += '</div>';
         _customWindowHtml += '</div>';
             
-        $(_settings.appendTo).append(_customWindowHtml);
+        _root.append(_customWindowHtml);
                 
         // OBJECT WINDOW ARRAY
         _wins[_uniqueID] = {};
@@ -449,8 +451,12 @@
             if (!_wins[id] || _wins[id].min === true) return false;
             
             var arrayPageScroll = [parseInt($(document).scrollLeft(), 10), parseInt($(document).scrollTop(), 10)];
-            var arrayViewPort = [parseInt($(window).width(), 10), parseInt($(window).height(), 10)];
-            
+            var arrayViewPort = [parseInt(_root.width(), 10), parseInt(_root.height(), 10)];
+           
+            console.log(_settings.appendTo);
+            console.log(arrayPageScroll);
+            console.log(arrayViewPort);
+
             _wins[id].min = true;
                     
             _isMinimize.push(id);
@@ -473,11 +479,11 @@
                                 bottom: 0,
                                 height: _wins[id].head.outerHeight() + 'px'
                             });
-            if ($.browser.msie && $.browser.version < 7) {
-                _wins[id].container.css({
-                                    position: 'absolute'
-                                });
-            }
+            //if ($.browser.msie && $.browser.version < 7) {
+            //    _wins[id].container.css({
+            //                        position: 'absolute'
+            //                    });
+            //}
             
             var numMin = countMinimize();
             var step = parseInt((arrayViewPort[0] - ((_wins[id].containerWPad + 1) * numMin))  / numMin, 10);
@@ -508,7 +514,7 @@
             
             _wins[id].container.hide();
             
-            $(_settings.appendTo).append(theClone);
+            _root.append(theClone);
             theClone.animate({
                             height: _wins[id].head.outerHeight() + 'px',
                             width: step + 'px',
@@ -545,7 +551,7 @@
             if (indexMinimize >= 0) _isMinimize.splice(indexMinimize, 1);
                     
             var arrayPageScroll = [parseInt($(document).scrollLeft(), 10), parseInt($(document).scrollTop(), 10)];
-            var arrayViewPort = [parseInt($(_settings.appendTo).width(), 10), parseInt($(_settings.appendTo).height(), 10)];
+            var arrayViewPort = [parseInt(_root.width(), 10), parseInt(_root.height(), 10)];
             
             _wins[id].max = true;
             _wins[id].min = false;
@@ -606,7 +612,7 @@
             
             _wins[id].container.hide();
             
-            $(_settings.appendTo).append(theClone);
+            _root.append(theClone);
             theClone.animate({
                             height: (arrayViewPort[1] - (_wins[id].container.outerHeight() - _wins[id].container.height())) + 'px',
                             width: (arrayViewPort[0] - (_wins[id].container.outerWidth() - _wins[id].container.width())) + 'px',
@@ -706,7 +712,7 @@
                 
                 _wins[id].container.hide();
                         
-                $(_settings.appendTo).append(theClone);
+                _root.append(theClone);
                 theClone.animate({
                                 height:_wins[id].height + 'px',
                                 width: _wins[id].width + 'px',
@@ -754,7 +760,7 @@
                 
                 _wins[id].container.hide();
                         
-                $(_settings.appendTo).append(theClone);
+                _root.append(theClone);
                 theClone.animate({
                                 height:_wins[id].height + 'px',
                                 width: _wins[id].width + 'px',
