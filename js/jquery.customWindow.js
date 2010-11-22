@@ -33,7 +33,7 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with CustomScroller.  If not, see <http://www.gnu.org/licenses/>.
+ * along with CustomWindow.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * Thanks to: http://fromvega.com/scripts for drag effect.
  * Thanks for the community that is helping the improvement
@@ -202,7 +202,7 @@
         _customWindowHtml += '<span class="customWindowTitle" style="-moz-user-select: none;"></span>';
         _customWindowHtml += '<div style="clear: both"></div>';
         _customWindowHtml += '</div>';
-        _customWindowHtml += '<div class="customWindowcontent"></div>';
+        _customWindowHtml += '<div class="customWindowContent"></div>';
         _customWindowHtml += '<div class="customWindowStatus">';
         _customWindowHtml += '<span class="customWindowResize" style="-moz-user-select: none;"></span>';
         _customWindowHtml += '<div style="clear: both"></div>';
@@ -218,7 +218,7 @@
         _wins[_uniqueID].container = $('#' + _uniqueID);
         _wins[_uniqueID].head = $('.customWindowHead', _wins[_uniqueID].container);
         _wins[_uniqueID].status = $('.customWindowStatus', _wins[_uniqueID].container);
-        _wins[_uniqueID].content = $('.customWindowcontent', _wins[_uniqueID].container);
+        _wins[_uniqueID].content = $('.customWindowContent', _wins[_uniqueID].container);
         _wins[_uniqueID].title = $('.customWindowTitle ', _wins[_uniqueID].container);
         _wins[_uniqueID].resizeIcon = $('.customWindowResize ', _wins[_uniqueID].container);
         _wins[_uniqueID].resizeWidth = $('.customWindowWidthResize ', _wins[_uniqueID].container);
@@ -452,11 +452,12 @@
             
             var arrayPageScroll = [parseInt($(document).scrollLeft(), 10), parseInt($(document).scrollTop(), 10)];
             var arrayViewPort = [parseInt(_root.width(), 10), parseInt(_root.height(), 10)];
-           
-            console.log(_settings.appendTo);
-            console.log(arrayPageScroll);
-            console.log(arrayViewPort);
 
+            var paddingBottom = parseInt(_root.css('padding-bottom'), 10);
+
+            var theClone = _wins[id].container.clone();
+            theClone.find('.customWindowContent').empty();
+            
             _wins[id].min = true;
                     
             _isMinimize.push(id);
@@ -470,20 +471,13 @@
             _wins[id].closeIcon.hide();
             _wins[id].maximizeIcon.hide();
             _wins[id].restoreIcon.hide();
-            
-            var theClone = _wins[id].container.clone();
-            
+             
             _wins[id].container.css({
                                 position: 'absolute',
                                 top: null,
-                                bottom: 0,
+                                bottom: paddingBottom + 'px',
                                 height: _wins[id].head.outerHeight() + 'px'
                             });
-            //if ($.browser.msie && $.browser.version < 7) {
-            //    _wins[id].container.css({
-            //                        position: 'absolute'
-            //                    });
-            //}
             
             var numMin = countMinimize();
             var step = parseInt((arrayViewPort[0] - ((_wins[id].containerWPad + 1) * numMin))  / numMin, 10);
@@ -518,7 +512,7 @@
             theClone.animate({
                             height: _wins[id].head.outerHeight() + 'px',
                             width: step + 'px',
-                            top: (arrayPageScroll[1] + arrayViewPort[1] - _wins[_uniqueID].heightMin) + 'px',
+                            top: (arrayPageScroll[1] + arrayViewPort[1] - _wins[_uniqueID].heightMin - paddingBottom) + 'px',
                             left: ((numMin - 1) * (step + _wins[id].containerWPad + 1)) + 'px',
                             opacity: 0
                         }, {
@@ -553,6 +547,11 @@
             var arrayPageScroll = [parseInt($(document).scrollLeft(), 10), parseInt($(document).scrollTop(), 10)];
             var arrayViewPort = [parseInt(_root.width(), 10), parseInt(_root.height(), 10)];
             
+            var paddingBottom = parseInt(_root.css('padding-bottom'), 10);
+            
+            var theClone = _wins[id].container.clone();
+            theClone.find('.customWindowContent').empty();
+            
             _wins[id].max = true;
             _wins[id].min = false;
             
@@ -566,13 +565,6 @@
             _wins[id].resizeWidth.hide();
             _wins[id].resizeHeight.hide();
                                 
-            var theClone = _wins[id].container.clone();
-            
-            theClone.css({
-                         top: _wins[id].container.offset().top + 'px',
-                         left: _wins[id].container.offset().left + 'px'
-                    });
-                
             _wins[id].container.css({
                                         position: 'absolute',
                                         height: (arrayViewPort[1] - (_wins[id].container.outerHeight() - _wins[id].container.height())) + 'px',
@@ -611,10 +603,11 @@
             _wins[id].container.removeClass('unselectWindow');
             
             _wins[id].container.hide();
-            
+           
             _root.append(theClone);
+
             theClone.animate({
-                            height: (arrayViewPort[1] - (_wins[id].container.outerHeight() - _wins[id].container.height())) + 'px',
+                            height: (arrayViewPort[1] - (_wins[id].container.outerHeight() - _wins[id].container.height()) - paddingBottom) + 'px',
                             width: (arrayViewPort[0] - (_wins[id].container.outerWidth() - _wins[id].container.width())) + 'px',
                             top: arrayPageScroll[1] + 'px',
                             left: arrayPageScroll[0] + 'px',
@@ -656,7 +649,7 @@
             if (_wins[id].min === true) {
                 _wins[id].min = false;
                 _wins[id].max = false;
-                    
+                     
                 _wins[id].content.show();
                 _wins[id].status.show();
                 _wins[id].maximizeIcon.show();
@@ -666,13 +659,9 @@
                 _wins[id].resizeIcon.show();
                 _wins[id].resizeWidth.show();
                 _wins[id].resizeHeight.show();
-                    
-                var theClone = _wins[id].container.clone();
                 
-                theClone.css({
-                             top: _wins[id].container.offset().top + 'px',
-                             left: _wins[id].container.offset().left + 'px'
-                        });
+                var theClone = _wins[id].container.clone();
+                theClone.find('.customWindowContent').empty();
                 
                 _wins[id].container.css({
                                             position: 'absolute',
@@ -682,7 +671,7 @@
                                             width: _wins[id].width + 'px',
                                             height: _wins[id].height + 'px'
                                         });
-                    
+
                 var numMin = countMinimize();
                         
                 var step = parseInt((arrayViewPort[0] - ((_wins[id].containerWPad + 1) * numMin))  / numMin, 10);
@@ -735,6 +724,9 @@
                 _wins[id].min = false;
                 _wins[id].max = false;
                 
+                var theClone = _wins[id].container.clone();
+                theClone.find('.customWindowContent').empty();
+
                 _wins[id].content.hide();
                 _wins[id].status.show();
                 _wins[id].restoreIcon.hide();
@@ -744,9 +736,7 @@
                 _wins[id].resizeIcon.show();
                 _wins[id].resizeWidth.show();
                 _wins[id].resizeHeight.show();
-                    
-                var theClone = _wins[id].container.clone();
-                
+                     
                 _wins[id].container.css({
                                             position: 'absolute',
                                             top: _wins[id].top + 'px',
