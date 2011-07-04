@@ -59,6 +59,12 @@
     -moz-user-select: none;
     -o-user-select: none;
     user-select: none;
+    position: relative;
+    top: -16px;
+}
+
+.customWindowStatus .customWindowResize {
+    position: static;
 }
 
 .unselectWindow .customWindowResize {

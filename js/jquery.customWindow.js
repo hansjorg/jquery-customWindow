@@ -182,7 +182,8 @@
             appendTo: 'body',
             onopen: null,
             onclose: null,
-            onresize: null
+            onresize: null,
+            statusBar: true
         }, options);
        
         var _root = $(_settings.appendTo);
@@ -206,10 +207,15 @@
         _customWindowHtml += '<div style="clear: both"></div>';
         _customWindowHtml += '</div>';
         _customWindowHtml += '<div class="customWindowContent"></div>';
-        _customWindowHtml += '<div class="customWindowStatus">';
-        _customWindowHtml += '<span class="customWindowResize"></span>';
-        _customWindowHtml += '<div style="clear: both"></div>';
-        _customWindowHtml += '</div>';
+        if(_settings.statusBar) {
+            _customWindowHtml += '<div class="customWindowStatus">';
+            _customWindowHtml += '<span class="customWindowResize"></span>';
+            _customWindowHtml += '<div style="clear: both"></div>';
+            _customWindowHtml += '</div>';
+        } else {
+            _customWindowHtml += '<span class="customWindowResize"></span>';
+            _customWindowHtml += '<div style="clear: both"></div>';
+        }
         _customWindowHtml += '</div>';
             
         _root.append(_customWindowHtml);
