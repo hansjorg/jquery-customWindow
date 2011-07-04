@@ -144,8 +144,11 @@
             elem = $(elem)[0];
         if (elem) {
             elem.onselectstart = function() { return false; };
-            elem.style.MozUserSelect = "none";
+            elem.style.WebkitUserSelect = "none";
             elem.style.KhtmlUserSelect = "none";
+            elem.style.MozUserSelect = "none";
+            elem.style.OUserSelect = "none";
+            elem.style.UserSelect = "none";
             elem.unselectable = "on";
         }
     };
@@ -192,19 +195,19 @@
         
         // HTML TEMPLATE
         var _customWindowHtml = '<div id="' + _uniqueID + '" class="customWindowContainer">';
-        _customWindowHtml += '<div class="customWindowWidthResize" style="-moz-user-select: none;"></div>';
-        _customWindowHtml += '<div class="customWindowHeightResize" style="-moz-user-select: none;"></div>';
+        _customWindowHtml += '<div class="customWindowWidthResize"></div>';
+        _customWindowHtml += '<div class="customWindowHeightResize"></div>';
         _customWindowHtml += '<div class="customWindowHead">';
         _customWindowHtml += '<span class="customWindowClose"></span>';
         _customWindowHtml += '<span class="customWindowRestore"></span>';
         _customWindowHtml += '<span class="customWindowMaximize"></span>';
         _customWindowHtml += '<span class="customWindowMinimize"></span>';
-        _customWindowHtml += '<span class="customWindowTitle" style="-moz-user-select: none;"></span>';
+        _customWindowHtml += '<span class="customWindowTitle"></span>';
         _customWindowHtml += '<div style="clear: both"></div>';
         _customWindowHtml += '</div>';
         _customWindowHtml += '<div class="customWindowContent"></div>';
         _customWindowHtml += '<div class="customWindowStatus">';
-        _customWindowHtml += '<span class="customWindowResize" style="-moz-user-select: none;"></span>';
+        _customWindowHtml += '<span class="customWindowResize"></span>';
         _customWindowHtml += '<div style="clear: both"></div>';
         _customWindowHtml += '</div>';
         _customWindowHtml += '</div>';

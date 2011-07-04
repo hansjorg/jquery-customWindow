@@ -16,12 +16,21 @@
 	border: 1px solid #7fa2e6;
 }
 
+.customWindowWidthResize,
+.customWindowHeightResize {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 .customWindowDragging,
 .customWindowResizing {
   filter: alpha(opacity=50); /* internet explorer */
-	-khtml-opacity: 0.5;       /* khtml, old safari */
-	-moz-opacity: 0.5;         /* mozilla, netscape */
-	opacity: 0.5;              /* fx, safari, opera */
+  -khtml-opacity: 0.5;       /* khtml, old safari */
+  -moz-opacity: 0.5;         /* mozilla, netscape */
+  opacity: 0.5;              /* fx, safari, opera */
 }
 
 .unselectWindow {
@@ -32,6 +41,11 @@
 .customWindowStatus {
 	height: 16px;
 	background: #ECE9D8;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 
 .customWindowResize {
@@ -40,6 +54,11 @@
 	width: 16px;
 	height: 16px;
 	background: url(../images/resize.gif) no-repeat center center;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 
 .unselectWindow .customWindowResize {
