@@ -178,6 +178,8 @@
             winId: null,
             width: 2/3,
             height: 3/4,
+            minWidth: 200,
+            minHeight: 200,
             title: 'Custom Window',
             appendTo: 'body',
             onopen: null,
@@ -379,8 +381,8 @@
                                             win: _uniqueID, 
                                             cursor: 'nw-resize',
                                             resizing: 'both',
-                                            minWidth: 200, 
-                                            minHeight: 200
+                                            minWidth: _settings.minWidth, 
+                                            minHeight: _settings.minHeight
                                         });
         _wins[_uniqueID].container.setResizeHandler(_wins[_uniqueID].resizeIcon);
         
@@ -389,8 +391,8 @@
                                             win: _uniqueID, 
                                             cursor: 'w-resize',
                                             resizing: 'width',
-                                            minWidth: 200, 
-                                            minHeight: 200
+                                            minWidth: _settings.minWidth, 
+                                            minHeight: _settings.minHeight
                                         });
         _wins[_uniqueID].container.setResizeHandler(_wins[_uniqueID].resizeWidth);
                 
