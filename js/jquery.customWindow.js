@@ -185,7 +185,8 @@
             onopen: null,
             onclose: null,
             onresize: null,
-            statusBar: true
+            statusBar: true,
+            resizeable: true
         }, options);
        
         var _root = $(_settings.appendTo);
@@ -211,10 +212,12 @@
         _customWindowHtml += '<div class="customWindowContent"></div>';
         if(_settings.statusBar) {
             _customWindowHtml += '<div class="customWindowStatus">';
-            _customWindowHtml += '<span class="customWindowResize"></span>';
+            if(_settings.resizeable) {
+                _customWindowHtml += '<span class="customWindowResize"></span>';
+            }
             _customWindowHtml += '<div style="clear: both"></div>';
             _customWindowHtml += '</div>';
-        } else {
+        } else if(_settings.resizeable) {
             _customWindowHtml += '<span class="customWindowResize"></span>';
             _customWindowHtml += '<div style="clear: both"></div>';
         }
