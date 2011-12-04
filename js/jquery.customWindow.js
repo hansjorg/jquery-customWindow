@@ -186,7 +186,7 @@
             onclose: null,
             onresize: null,
             statusBar: true,
-            resizeable: true
+            resizable: true
         }, options);
        
         var _root = $(_settings.appendTo);
@@ -212,12 +212,12 @@
         _customWindowHtml += '<div class="customWindowContent"></div>';
         if(_settings.statusBar) {
             _customWindowHtml += '<div class="customWindowStatus">';
-            if(_settings.resizeable) {
+            if(_settings.resizable) {
                 _customWindowHtml += '<span class="customWindowResize"></span>';
             }
             _customWindowHtml += '<div style="clear: both"></div>';
             _customWindowHtml += '</div>';
-        } else if(_settings.resizeable) {
+        } else if(_settings.resizable) {
             _customWindowHtml += '<span class="customWindowResize"></span>';
             _customWindowHtml += '<div style="clear: both"></div>';
         }
@@ -1048,15 +1048,15 @@
         // set a child element as a handler
         $.fn.setResizeHandler = function (handler) {
             return this.each(function () {
-                var _resizeable = this;
+                var _resizable = this;
                 
                 // enable event bubbling so the user can reach the handle
                 _bubblings2[this.id] = true;
                 
-                $(_resizeable).css("cursor", "");
+                $(_resizable).css("cursor", "");
                 
                 // set current resize status
-                _resizeStatus[_resizeable.id] = "handler";
+                _resizeStatus[_resizable.id] = "handler";
                 
                 $(handler).css("cursor", options.cursor);
                 
@@ -1121,7 +1121,7 @@
         if (this.length > 0) {
             this.each(function (index, domElement) {
                 // if no id is defined assign a unique one
-                if (undefined === this.id || !this.id.length) this.id = "resizeableWindow_"+(new Date().getTime());
+                if (undefined === this.id || !this.id.length) this.id = "resizableWindow_"+(new Date().getTime());
                 
                 _bubblings2[this.id] = options.allowBubbling ? true : false;
                 
