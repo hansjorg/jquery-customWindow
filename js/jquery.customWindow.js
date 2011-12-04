@@ -186,7 +186,8 @@
             onclose: null,
             onresize: null,
             statusBar: true,
-            resizable: true
+            resizable: true,
+            maximizable: true
         }, options);
        
         var _root = $(_settings.appendTo);
@@ -204,7 +205,9 @@
         _customWindowHtml += '<div class="customWindowHead">';
         _customWindowHtml += '<span class="customWindowClose"></span>';
         _customWindowHtml += '<span class="customWindowRestore"></span>';
-        _customWindowHtml += '<span class="customWindowMaximize"></span>';
+        if(_settings.maximizable) {
+            _customWindowHtml += '<span class="customWindowMaximize"></span>';
+        }
         _customWindowHtml += '<span class="customWindowMinimize"></span>';
         _customWindowHtml += '<span class="customWindowTitle"></span>';
         _customWindowHtml += '<div style="clear: both"></div>';
@@ -810,7 +813,7 @@
             } else {
                 if (_wins[_uniqueID].max === true) {
                     restoreWin(_uniqueID);
-                } else {
+                } else if (_settings.maximizable) {
                     maximizeWin(_uniqueID);
                 }
             }
