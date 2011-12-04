@@ -187,7 +187,8 @@
             onresize: null,
             statusBar: true,
             resizable: true,
-            maximizable: true
+            maximizable: true,
+            minimizable: true
         }, options);
        
         var _root = $(_settings.appendTo);
@@ -208,7 +209,9 @@
         if(_settings.maximizable) {
             _customWindowHtml += '<span class="customWindowMaximize"></span>';
         }
-        _customWindowHtml += '<span class="customWindowMinimize"></span>';
+        if(_settings.minimizable) {
+            _customWindowHtml += '<span class="customWindowMinimize"></span>';
+        }
         _customWindowHtml += '<span class="customWindowTitle"></span>';
         _customWindowHtml += '<div style="clear: both"></div>';
         _customWindowHtml += '</div>';
