@@ -186,6 +186,7 @@
             onclose: null,
             onresize: null,
             statusBar: true,
+            resizeHandle: true,
             resizable: true,
             maximizable: true,
             minimizable: true
@@ -218,12 +219,12 @@
         _customWindowHtml += '<div class="customWindowContent"></div>';
         if(_settings.statusBar) {
             _customWindowHtml += '<div class="customWindowStatus">';
-            if(_settings.resizable) {
+            if(_settings.resizable && _settings.resizeHandle) {
                 _customWindowHtml += '<span class="customWindowResize"></span>';
             }
             _customWindowHtml += '<div style="clear: both"></div>';
             _customWindowHtml += '</div>';
-        } else if(_settings.resizable) {
+        } else if(_settings.resizable && _settings.resizeHandle) {
             _customWindowHtml += '<span class="customWindowResize"></span>';
             _customWindowHtml += '<div style="clear: both"></div>';
         }
@@ -385,35 +386,38 @@
         _wins[_uniqueID].container.setDragHandler(_wins[_uniqueID].head);
                 
         // SET RESIZE HANDLER
-        _wins[_uniqueID].container.resizeWindow({
-                                            allowBubbling: false, 
-                                            win: _uniqueID, 
-                                            cursor: 'nw-resize',
-                                            resizing: 'both',
-                                            minWidth: _settings.minWidth, 
-                                            minHeight: _settings.minHeight
-                                        });
-        _wins[_uniqueID].container.setResizeHandler(_wins[_uniqueID].resizeIcon);
         
-        _wins[_uniqueID].container.resizeWindow({
-                                            allowBubbling: false, 
-                                            win: _uniqueID, 
-                                            cursor: 'w-resize',
-                                            resizing: 'width',
-                                            minWidth: _settings.minWidth, 
-                                            minHeight: _settings.minHeight
-                                        });
-        _wins[_uniqueID].container.setResizeHandler(_wins[_uniqueID].resizeWidth);
-                
-        _wins[_uniqueID].container.resizeWindow({
-                                            allowBubbling: false, 
-                                            win: _uniqueID, 
-                                            cursor: 'n-resize',
-                                            resizing: 'height',
-                                            minWidth: 200, 
-                                            minHeight: 200
-                                        });
-        _wins[_uniqueID].container.setResizeHandler(_wins[_uniqueID].resizeHeight);
+        if(_settings.resizable) {
+            _wins[_uniqueID].container.resizeWindow({
+                                                allowBubbling: false, 
+                                                win: _uniqueID, 
+                                                cursor: 'nw-resize',
+                                                resizing: 'both',
+                                                minWidth: _settings.minWidth, 
+                                                minHeight: _settings.minHeight
+                                            });
+            _wins[_uniqueID].container.setResizeHandler(_wins[_uniqueID].resizeIcon);
+            
+            _wins[_uniqueID].container.resizeWindow({
+                                                allowBubbling: false, 
+                                                win: _uniqueID, 
+                                                cursor: 'w-resize',
+                                                resizing: 'width',
+                                                minWidth: _settings.minWidth, 
+                                                minHeight: _settings.minHeight
+                                            });
+            _wins[_uniqueID].container.setResizeHandler(_wins[_uniqueID].resizeWidth);
+                    
+            _wins[_uniqueID].container.resizeWindow({
+                                                allowBubbling: false, 
+                                                win: _uniqueID, 
+                                                cursor: 'n-resize',
+                                                resizing: 'height',
+                                                minWidth: 200, 
+                                                minHeight: 200
+                                            });
+            _wins[_uniqueID].container.setResizeHandler(_wins[_uniqueID].resizeHeight);
+        }
         
         _wins[_uniqueID].container.bind('mousedown', function (e) {
                     if (!_wins[_uniqueID] || _wins[_uniqueID].min === true) return false;
