@@ -198,7 +198,7 @@
         var arrayViewPort = [parseInt(_root.width(), 10), parseInt(_root.height(), 10)];
                 
         // ID UNIQUE
-        var _uniqueID = (_settings.windId) ? _settings.windId : "customWindowID_" + (new Date().getTime());
+        var _uniqueID = (_settings.winId) ? _settings.winId : "customWindowID_" + (new Date().getTime());
         
         // HTML TEMPLATE
         var _customWindowHtml = '<div id="' + _uniqueID + '" class="customWindowContainer">';
