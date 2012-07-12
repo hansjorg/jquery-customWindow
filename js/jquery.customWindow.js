@@ -139,9 +139,10 @@
     };
     
     // set text unselectable cross-browser
-    function makeUnselectable (elem) {
-        if (typeof(elem) == 'string')
+    var makeUnselectable = function(elem) {
+        if (typeof(elem) === 'string') {
             elem = $(elem)[0];
+        }
         if (elem) {
             elem.onselectstart = function() { return false; };
             elem.style.WebkitUserSelect = "none";
@@ -197,9 +198,19 @@
         var arrayPageScroll = [parseInt($(document).scrollLeft(), 10), parseInt($(document).scrollTop(), 10)];
         var arrayViewPort = [parseInt(_root.width(), 10), parseInt(_root.height(), 10)];
                 
+        // If a window with this ID already exists, raise it or restore it if it's minimized
+        if(_wins[_settings.winId]) {
+            if(_wins[_settings.winId].min) {
+                restoreWin(_settings.winId);
+            } else {
+                setBehind(_settings.winId);
+            }
+            return windowObject();
+        }
+
         // ID UNIQUE
         var _uniqueID = (_settings.winId) ? _settings.winId : "customWindowID_" + (new Date().getTime());
-        
+
         // HTML TEMPLATE
         var _customWindowHtml = '<div id="' + _uniqueID + '" class="customWindowContainer">';
         _customWindowHtml += '<div class="customWindowWidthResize"></div>';
@@ -376,7 +387,7 @@
         // SET TITLE
         if (_settings.title != '') _wins[_uniqueID].title.html(_settings.title);
         
-        makeUnselectable('.customWindowTitle');
+        makeUnselectable(_wins[_uniqueID].title[0]);
                 
         // SET DRAG HANDLER
         _wins[_uniqueID].container.dragWindow({
@@ -447,7 +458,7 @@
         fixSelect();
         
         // SET CLOSE EVENT
-        var closeWin = function (id) {
+        function closeWin(id) {
             if (!_wins[id]) return false;
             
             _wins[id].container.remove();
@@ -471,7 +482,7 @@
         });
         
         // SET MINIMIZE EVENT
-        var minimizeWin = function (id) {
+        function minimizeWin(id) {
             if (!_wins[id] || _wins[id].min === true) return false;
             
             var arrayPageScroll = [parseInt($(document).scrollLeft(), 10), parseInt($(document).scrollTop(), 10)];
@@ -561,7 +572,7 @@
         });
                 
         // SET MAXIMIZE EVENT
-        var maximizeWin = function (id) {
+        function maximizeWin(id) {
             if (!_wins[id] || _wins[id].max === true) return false;
             
             var indexMinimize = $.inArray(id, _isMinimize);
@@ -663,7 +674,7 @@
         });
                 
         // SET RESTORE EVENT
-        var restoreWin = function (id) {
+        function restoreWin(id) {
             if (!_wins[id]) return false;
             
             var indexMinimize = $.inArray(id, _isMinimize);
@@ -809,7 +820,6 @@
         });
         
         _wins[_uniqueID].head.bind('dblclick', function (e) {
-            
             if (_wins[_uniqueID].min === true) {
                 if (_wins[_uniqueID].max === true) {
                     _wins[_uniqueID].max = false;
@@ -839,22 +849,25 @@
             _wins[_uniqueID].container.onresize(_settings.onresize);
         }
 
-        return {
-                    container: _wins[_uniqueID].container,
-                    head: _wins[_uniqueID].head,
-                    status: _wins[_uniqueID].status,
-                    resizeIcon: _wins[_uniqueID].resizeIcon,
-                    title: _wins[_uniqueID].title,
-                    closeIcon: _wins[_uniqueID].closeIcon,
-                    minimizeIcon: _wins[_uniqueID].minimizeIcon,
-                    maximizeIcon: _wins[_uniqueID].maximizeIcon,
-                    restoreIcon: _wins[_uniqueID].restoreIcon,
-                    content: _wins[_uniqueID].content,
-                    'close': function () { closeWin(_uniqueID); },
-                    minimize: function () { minimizeWin(_uniqueID); },
-                    maximize: function () { maximizeWin(_uniqueID); },
-                    restore: function () { restoreWin(_uniqueID); }
-                };
+        function windowObject() {
+            return {
+                        container: _wins[_uniqueID].container,
+                        head: _wins[_uniqueID].head,
+                        status: _wins[_uniqueID].status,
+                        resizeIcon: _wins[_uniqueID].resizeIcon,
+                        title: _wins[_uniqueID].title,
+                        closeIcon: _wins[_uniqueID].closeIcon,
+                        minimizeIcon: _wins[_uniqueID].minimizeIcon,
+                        maximizeIcon: _wins[_uniqueID].maximizeIcon,
+                        restoreIcon: _wins[_uniqueID].restoreIcon,
+                        content: _wins[_uniqueID].content,
+                        'close': function () { closeWin(_uniqueID); },
+                        minimize: function () { minimizeWin(_uniqueID); },
+                        maximize: function () { maximizeWin(_uniqueID); },
+                        restore: function () { restoreWin(_uniqueID); }
+                    };
+        }
+        return windowObject();
                 
     };
     
