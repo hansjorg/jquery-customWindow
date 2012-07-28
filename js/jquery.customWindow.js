@@ -83,9 +83,9 @@
         $.each(_wins, function (key, value) {
             if (typeof value !== 'function') {
                 if (key !== id) {
-                    _wins[key].container.addClass('unselectWindow');
+                    _wins[key].unselectWin();
                 } else {
-                    _wins[key].container.removeClass('unselectWindow');
+                    _wins[key].selectWin();
                     $(_wins[key].container).maxZIndex({ inc: 5, group: '.customWindowContainer' });
                 }
             }
@@ -452,7 +452,20 @@
         _wins[_uniqueID].heightMin = 1 + _wins[_uniqueID].head.outerHeight(true) + (_wins[_uniqueID].container.outerHeight() - _wins[_uniqueID].container.height());
         _wins[_uniqueID].min = false;
         _wins[_uniqueID].max = false;
-                
+        _wins[_uniqueID].selected = true;
+        _wins[_uniqueID].changeIndicated = false;
+        
+        _wins[_uniqueID].selectWin = function() {
+            this.container.removeClass('unselectWindow');
+            this.selected = true;
+            resetChangeIndicated(_uniqueID);
+        }
+
+        _wins[_uniqueID].unselectWin = function() {
+            this.container.addClass('unselectWindow');
+            this.selected = false;
+        }
+        
         setBehind(_uniqueID);
         
         fixSelect();
@@ -539,7 +552,7 @@
                     
             _wins[id].container.dragOff();
                     
-            _wins[id].container.addClass('unselectWindow');
+            _wins[id].unselectWin();
             
             _wins[id].container.hide();
             
@@ -635,7 +648,7 @@
                         
             _wins[id].container.dragOff();
                     
-            _wins[id].container.removeClass('unselectWindow');
+            _wins[id].selectWin();
             
             _wins[id].container.hide();
            
@@ -839,7 +852,20 @@
             
             return false;
         });
+     
+        function indicateChange(id) {
+            if (!_wins[id] || _wins[id].selected || _wins[id].changeIndicated) return false;
+
+            _wins[id].container.addClass('windowChanged');
+            _wins[id].changeIndicated = true;
+        }
+
+        function resetChangeIndicated(id) {
+            _wins[id].container.removeClass('windowChanged');
+            _wins[id].changeIndicated = false;
+        }
         
+        // call onopen handler
         if (typeof _settings.onopen === 'function'){
             _settings.onopen(_wins[_uniqueID].content, _wins[_uniqueID]);
         }
@@ -861,10 +887,11 @@
                         maximizeIcon: _wins[_uniqueID].maximizeIcon,
                         restoreIcon: _wins[_uniqueID].restoreIcon,
                         content: _wins[_uniqueID].content,
-                        'close': function () { closeWin(_uniqueID); },
+                        close: function () { closeWin(_uniqueID); },
                         minimize: function () { minimizeWin(_uniqueID); },
                         maximize: function () { maximizeWin(_uniqueID); },
-                        restore: function () { restoreWin(_uniqueID); }
+                        restore: function () { restoreWin(_uniqueID); },
+                        indicateChange: function() { indicateChange(_uniqueID); }
                     };
         }
         return windowObject();

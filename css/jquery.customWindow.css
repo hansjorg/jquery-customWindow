@@ -38,6 +38,10 @@
 	border: 1px solid #0056e8;
 }
 
+.windowChanged .customWindowTitle {
+    color: #ff7744;
+}
+
 .customWindowStatus {
 	height: 16px;
 	background: #ECE9D8;

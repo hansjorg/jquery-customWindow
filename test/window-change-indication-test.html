@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>jQuery customWindow plugin (contained in div test)</title>
+    <link rel="stylesheet" href="../css/jquery.customWindow.css" type="text/css"/>
+    <style>
+      html, body {
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        overflow: hidden;
+      }
+      .code {
+        border: 1px solid #CC0000;
+        background: #FFFFCC;
+        padding: 10px;
+        width: 40%;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+      }
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.corner.js"></script>
+    <script type="text/javascript" src="../js/jquery.customWindow.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            function openWindow(title) {
+                return $.customWindow({
+                    width: 250,
+                    height: 250,
+                    appendTo: '#window-container',
+                    title: title,
+                    onopen: function (cont, obj) {
+                        cont.html($('#test-content').html());
+                    },
+                    statusBar: false
+                });
+            }
+
+            openWindow('Other window');
+            
+            var win = openWindow('Test window');
+            $('#testChange').click(function(e) {
+                e.preventDefault();
+                win.content.append('test ');
+                win.indicateChange();
+            });
+
+            var i = 1;
+            $('#openWin').click(function(e) {
+                e.preventDefault();
+                openWindow('Window ' + i);
+                i++;
+            });
+
+        });
+    </script>
+  </head>
+
+  <body>
+    <div style="width: 100%; height: 100%; overflow: auto; position: relative;">
+      <div id="window-container" style="width: 100%; height: 100%; background-color: #aaaaaa; overflow: hidden;">
+        <a id="openWin" href="#">Click to open new window</a></br>
+        <a id="testChange" href="#">Click to test change indication</a> (window title color should change if window not selected)
+      </div>
+      <div style="display: none;">
+        <div id="test-content"><h3>indicate change test</h3></div>
+      </div>
+    </div>
+  </body>
+</html>
