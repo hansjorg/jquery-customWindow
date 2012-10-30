@@ -911,7 +911,8 @@
         
         options = $.extend({
             win: null,
-            allowBubbling: false
+            allowBubbling: false,
+            blockOnViewportEdges: true
         }, options);
         
         // disable the dragging feature for the element
@@ -949,12 +950,15 @@
                 // bind event handler
                 handler.bind('mousedown', function (e) {
                     _holdingHandler = true;
+
+                    // set mouseup handler on $(document) as it might come from outside handle
+                    $(document).bind('mouseup.drag-handler-' + _draggable.id, function(e) {
+                        _holdingHandler = false;
+                        // clean up event
+                        $(document).unbind('mouseup.drag-handler-' + _draggable.id);
+                    });
                 });
                 
-                // bind event handler
-                handler.bind('mouseup', function (e) {
-                    _holdingHandler = false;
-                });
             });
         };
         
@@ -965,6 +969,12 @@
             
             var Y = _lastElemTop + spanY;
             var X = _lastElemLeft + spanX;
+
+            if(options.blockOnViewportEdges) {
+                // keep window inside viewport
+                if(Y < 0) Y = 0;
+                if(X < 0) X = 0;
+            }
             
             $(_currentElement).css("top",  Y + 'px');
             $(_currentElement).css("left", X + 'px');
@@ -1003,22 +1013,23 @@
                 
                 // set dragStatus 
                 _dragStatus[domElement.id] = "on";
-
-                // when an element is let go after dragging
-                $(this).bind("mouseup", function(e) {
-                    // remove class marking this window as being dragged
-                    $(this).removeClass("customWindowDragging");
-
-                    return _bubblings[this.id];
-                });
-                
+               
                 // when an element receives a mouse press
                 $(this).bind("mousedown", function (e) {
                     
                     // if drag status is off, break
                     if((_dragStatus[this.id] == "off") || (_dragStatus[this.id] == "handler" && !_holdingHandler))
                         return _bubblings[this.id];
-                    
+
+                    // when an element is let go after dragging
+                    var that = this;
+                    $(document).bind("mouseup.drag-" + that.id, function(e) {
+                        // remove class marking this window as being dragged
+                        $(that).removeClass("customWindowDragging");
+                        $(document).unbind("mouseup.drag-" + that.id);
+                        return _bubblings[this.id];
+                    });
+     
                     // set it as absolute positioned
                     $(this).css("position", "absolute");
 
@@ -1113,11 +1124,14 @@
                 // bind event handler
                 handler.bind('mousedown', function(e){
                     _holdingHandler = true;
-                });
-                
-                // bind event handler
-                handler.bind('mouseup', function(e){
-                    _holdingHandler = false;
+
+                    // set mouseup handler on $(document) as it might come from outside handler
+                    $(document).bind('mouseup.resize-handler-' + _resizable.id, function(e) {
+                        _holdingHandler = false;
+                        // clean up event
+                        $(document).unbind('mouseup.resize-handler-' + _resizable.id);
+                    });
+
                 });
             });
         };
@@ -1180,18 +1194,20 @@
                 
                 $(this).css("cursor", options.cursor);
 
-                // when an elemnt is let go
-                $(this).bind("mouseup", function(e) {
-                    // remove class marking this window as being resized
-                    $(this).removeClass('customWindowResizing');
-                });
-
                 // when an element receives a mouse press
                 $(this).bind("mousedown", function (e) {
-                    
                     // if resize status is off, break
                     if((_resizeStatus[this.id] == "off") || (_resizeStatus[this.id] == "handler" && !_holdingHandler))
                         return _bubblings2[this.id];
+
+                    // when an element is let go (attach to document, might not happen inside window)
+                    var that = this;
+                    $(document).bind("mouseup.resize-" + that.id, function(e) {
+                        // remove class marking this window as being resized
+                        $(that).removeClass('customWindowResizing');
+                        // clean up event
+                        $(document).unbind("mouseup.resize-" + that.id);
+                    });
 
                     // add class marking thiw window as being resized
                     $(this).addClass('customWindowResizing');
