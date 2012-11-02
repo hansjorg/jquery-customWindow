@@ -53,7 +53,7 @@
     var _handler = {};
     var _bubblings = {};
     var _isMinimize = [];
-    var _resizeCallbacks = {};
+    var _resizeendCallbacks = {};
     
     // get/set max z-index in a group
     $.maxZIndex = $.fn.maxZIndex = function (options) {
@@ -185,6 +185,7 @@
             appendTo: 'body',
             onopen: null,
             onclose: null,
+            onresize: null,
             onresizeend: null,
             statusBar: true,
             resizeHandle: true,
@@ -1076,7 +1077,7 @@
     // register the function to be called when a window is resized
     $.fn.onresizeend = function(callback){
         return this.each(function(){
-            _resizeCallbacks[this.id] = callback;
+            _resizeendCallbacks[this.id] = callback;
         });
     };
 
@@ -1174,8 +1175,8 @@
             if (_isMouseDown === true && _resizeStatus[_currentElement.id] !== 'off') {
                 _isMouseDown = false;
 
-                if(_resizeCallbacks[_currentElement.id] != undefined){
-                    _resizeCallbacks[_currentElement.id](_wins[options.win]);
+                if(_resizeendCallbacks[_currentElement.id] != undefined){
+                    _resizeendCallbacks[_currentElement.id](_wins[options.win]);
                 }
                 
                 return false;
