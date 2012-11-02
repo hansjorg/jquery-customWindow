@@ -185,7 +185,7 @@
             appendTo: 'body',
             onopen: null,
             onclose: null,
-            onresize: null,
+            onresizeend: null,
             statusBar: true,
             resizeHandle: true,
             resizable: true,
@@ -669,8 +669,8 @@
                                 _wins[id].content.height(_wins[id].container.height() - _wins[id].containerHPad);
                                 _wins[id].content.show();
                                 setBehind(id);
-                                if (typeof _settings.onresize === 'function'){
-                                    _settings.onresize(_wins[id]);
+                                if (typeof _settings.onresizeend === 'function'){
+                                    _settings.onresizeend(_wins[id]);
                                 }
                             } 
                         });
@@ -812,8 +812,8 @@
                                     _wins[id].container.show();
                                     _wins[id].content.height(_wins[id].container.height() - _wins[id].containerHPad);
                                     _wins[id].content.show();
-                                    if (typeof _settings.onresize === 'function'){
-                                        _settings.onresize(_wins[id]);
+                                    if (typeof _settings.onresizeend === 'function'){
+                                        _settings.onresizeend(_wins[id]);
                                     }
                                 } 
                             });
@@ -871,8 +871,8 @@
         }
         
         // set a function to be called on resize event
-        if (typeof _settings.onresize === 'function'){
-            _wins[_uniqueID].container.onresize(_settings.onresize);
+        if (typeof _settings.onresizeend === 'function'){
+            _wins[_uniqueID].container.onresizeend(_settings.onresizeend);
         }
 
         function windowObject() {
@@ -1074,7 +1074,7 @@
     };
         
     // register the function to be called when a window is resized
-    $.fn.onresize = function(callback){
+    $.fn.onresizeend = function(callback){
         return this.each(function(){
             _resizeCallbacks[this.id] = callback;
         });
