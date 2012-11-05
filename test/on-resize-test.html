@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>jQuery customWindow plugin (contained in div test)</title>
+    <link rel="stylesheet" href="../css/jquery.customWindow.css" type="text/css"/>
+    <style>
+      html, body {
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        overflow: hidden;
+      }
+      .code {
+        border: 1px solid #CC0000;
+        background: #FFFFCC;
+        padding: 10px;
+        width: 40%;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+      }
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.corner.js"></script>
+    <script type="text/javascript" src="../js/jquery.customWindow.js"></script>
+    <script type="text/javascript">
+      $(function(){
+            var timeout;
+            function openWindow(title) {
+                $.customWindow({
+                    width: 450,
+                    height: 350,
+                    minWidth: 450,
+                    minHeight: 350,
+                    appendTo: '#window-container',
+                    title: title,
+                    onopen: function (cont, obj) {
+                        cont.html($('#test-content').html());
+                    },
+                    onresize: function(win) {
+                      var w = win.content.width();
+                      var h = win.content.height();
+
+                      if(timeout) window.clearTimeout(timeout);
+
+                      timeout = window.setTimeout(function() {
+                        var size = w/200 + 'em';
+                        testText.css('font-size', size);
+                      }, 5);
+
+                    },
+                    statusBar: false
+                });
+            }
+
+	        var i = 1;
+          var win = openWindow('Window ' + i);
+          var testText = $('.test-text');
+	
+	        $('a.openWin').each(function () {
+		        $(this).bind('click', function (e) { 
+                    i++;
+                    openWindow('Window ' + i);
+				});
+			});
+        });
+    </script>
+  </head>
+
+  <body>
+    <div style="width: 100%; height: 100%; overflow: auto; position: relative;">
+      <div id="window-container" style="width: 100%; height: 100%; background-color: #aaaaaa; overflow: hidden;">
+        <a href="javascript: void(0);" class="openWin">Click to open another window</a>
+      </div>
+      <div style="display: none;">
+        <div id="test-content"><h3 class="test-text">on resize</h3></div>
+      </div>
+    </div>
+  </body>
+</html>

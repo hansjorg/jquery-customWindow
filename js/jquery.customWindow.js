@@ -403,30 +403,33 @@
             _wins[_uniqueID].container.resizeWindow({
                                                 allowBubbling: false, 
                                                 win: _uniqueID, 
-                                                cursor: 'nw-resize',
+                                                cursor: 'se-resize',
                                                 resizing: 'both',
                                                 minWidth: _settings.minWidth, 
-                                                minHeight: _settings.minHeight
+                                                minHeight: _settings.minHeight,
+                                                onresize: _settings.onresize
                                             });
             _wins[_uniqueID].container.setResizeHandler(_wins[_uniqueID].resizeIcon);
             
             _wins[_uniqueID].container.resizeWindow({
                                                 allowBubbling: false, 
                                                 win: _uniqueID, 
-                                                cursor: 'w-resize',
+                                                cursor: 'e-resize',
                                                 resizing: 'width',
                                                 minWidth: _settings.minWidth, 
-                                                minHeight: _settings.minHeight
+                                                minHeight: _settings.minHeight,
+                                                onresize: _settings.onresize
                                             });
             _wins[_uniqueID].container.setResizeHandler(_wins[_uniqueID].resizeWidth);
                     
             _wins[_uniqueID].container.resizeWindow({
                                                 allowBubbling: false, 
                                                 win: _uniqueID, 
-                                                cursor: 'n-resize',
+                                                cursor: 's-resize',
                                                 resizing: 'height',
-                                                minWidth: 200, 
-                                                minHeight: 200
+                                                minWidth: _settings.minWidth, 
+                                                minHeight: _settings.minHeight,
+                                                onresize: _settings.onresize
                                             });
             _wins[_uniqueID].container.setResizeHandler(_wins[_uniqueID].resizeHeight);
         }
@@ -1104,6 +1107,7 @@
             minHeight: null,
             maxWidth: null,
             maxHeight: null,
+            onresize: null,
             allowBubbling: false
         }, options);
         
@@ -1159,6 +1163,11 @@
                 }
             
             }
+
+            if (typeof _settings.onresize === 'function'){
+                _settings.onresize(_wins[id]);
+            }
+
         };
         
         // when the mouse is moved while the mouse button is pressed
