@@ -475,13 +475,14 @@
         fixSelect();
         
         // SET CLOSE EVENT
+        _wins[_uniqueID].onclose = _settings.onclose;
         function closeWin(id) {
             if (!_wins[id]) return false;
             
             _wins[id].container.remove();
             
-            if (typeof _settings.onclose === 'function'){
-                _settings.onclose();
+            if (typeof _wins[id].onclose === 'function'){
+                _wins[id].onclose();
             }
             
             delete _wins[id];
