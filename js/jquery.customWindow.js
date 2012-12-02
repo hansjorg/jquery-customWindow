@@ -676,6 +676,11 @@
                                 _wins[id].content.height(_wins[id].container.height() - _wins[id].containerHPad);
                                 _wins[id].content.show();
                                 setBehind(id);
+
+                                var onresizeHandler = _wins[id].settings.onresize;
+                                if (typeof onresizeHandler === 'function'){
+                                    onresizeHandler(_wins[id]);
+                                }
                                 var onresizeendHandler = _wins[id].settings.onresizeend;
                                 if (typeof onresizeendHandler === 'function'){
                                     onresizeendHandler(_wins[id]);
@@ -820,6 +825,11 @@
                                     _wins[id].container.show();
                                     _wins[id].content.height(_wins[id].container.height() - _wins[id].containerHPad);
                                     _wins[id].content.show();
+
+                                    var onresizeHandler = _wins[id].settings.onresize;
+                                    if (typeof onresizeHandler === 'function'){
+                                        onresizeHandler(_wins[id]);
+                                    }
                                     var onresizeendHandler = _wins[id].settings.onresizeend;
                                     if (typeof onresizeendHandler === 'function'){
                                         onresizeendHandler(_wins[id]);
