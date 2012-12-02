@@ -48,7 +48,6 @@
 (function ($) {
     // some private vars
     var _wins = {};
-    var _settings;
     var _dragStatus = {};
     var _handler = {};
     var _bubblings = {};
@@ -175,7 +174,7 @@
     $.customWindow = function (options) {
         
         // default settings
-        _settings = $.extend({
+        var _settings = $.extend({
             winId: null,
             width: 2/3,
             height: 3/4,
@@ -193,12 +192,7 @@
             maximizable: true,
             minimizable: true
         }, options);
-       
-        var _root = $(_settings.appendTo);
 
-        var arrayPageScroll = [parseInt($(document).scrollLeft(), 10), parseInt($(document).scrollTop(), 10)];
-        var arrayViewPort = [parseInt(_root.width(), 10), parseInt(_root.height(), 10)];
-                
         // If a window with this ID already exists, raise it or restore it if it's minimized
         if(_wins[_settings.winId]) {
             if(_wins[_settings.winId].min) {
@@ -212,6 +206,17 @@
         // ID UNIQUE
         var _uniqueID = (_settings.winId) ? _settings.winId : "customWindowID_" + (new Date().getTime());
 
+        // OBJECT WINDOW ARRAY
+        _wins[_uniqueID] = {};
+        
+        // Store settings
+        _wins[_uniqueID].settings = _settings;
+      
+        var _root = $(_settings.appendTo);
+
+        var arrayPageScroll = [parseInt($(document).scrollLeft(), 10), parseInt($(document).scrollTop(), 10)];
+        var arrayViewPort = [parseInt(_root.width(), 10), parseInt(_root.height(), 10)];
+                
         // HTML TEMPLATE
         var _customWindowHtml = '<div id="' + _uniqueID + '" class="customWindowContainer">';
         _customWindowHtml += '<div class="customWindowWidthResize"></div>';
@@ -243,10 +248,7 @@
         _customWindowHtml += '</div>';
             
         _root.append(_customWindowHtml);
-                
-        // OBJECT WINDOW ARRAY
-        _wins[_uniqueID] = {};
-                
+                               
         // WINDOW COMPONENT
         _wins[_uniqueID].container = $('#' + _uniqueID);
         _wins[_uniqueID].head = $('.customWindowHead', _wins[_uniqueID].container);
@@ -674,8 +676,9 @@
                                 _wins[id].content.height(_wins[id].container.height() - _wins[id].containerHPad);
                                 _wins[id].content.show();
                                 setBehind(id);
-                                if (typeof _settings.onresizeend === 'function'){
-                                    _settings.onresizeend(_wins[id]);
+                                var onresizeendHandler = _wins[id].settings.onresizeend;
+                                if (typeof onresizeendHandler === 'function'){
+                                    onresizeendHandler(_wins[id]);
                                 }
                             } 
                         });
@@ -817,8 +820,9 @@
                                     _wins[id].container.show();
                                     _wins[id].content.height(_wins[id].container.height() - _wins[id].containerHPad);
                                     _wins[id].content.show();
-                                    if (typeof _settings.onresizeend === 'function'){
-                                        _settings.onresizeend(_wins[id]);
+                                    var onresizeendHandler = _wins[id].settings.onresizeend;
+                                    if (typeof onresizeendHandler === 'function'){
+                                        onresizeendHandler(_wins[id]);
                                     }
                                 } 
                             });
@@ -826,7 +830,7 @@
                 setBehind(id);
             }
         };
-        
+
         _wins[_uniqueID].restoreIcon.bind('click', function (e) {
             
             restoreWin(_uniqueID);
@@ -1165,8 +1169,9 @@
             
             }
 
-            if (typeof _settings.onresize === 'function'){
-                _settings.onresize(_wins[id]);
+            var onresizeHandler = _wins[id].settings.onresize;
+            if (typeof onresizeHandler === 'function'){
+                onresizeHandler(_wins[id]);
             }
 
         };
