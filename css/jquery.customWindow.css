@@ -11,9 +11,9 @@
 }
 
 .customWindowContainer {
-	background: #0056e8 url(../images/head.gif) repeat-x left top;
+	background: #e8e8e8 url(../images/head.png) repeat-x left top;
 	padding: 3px;
-	border: 1px solid #7fa2e6;
+	border: 1px solid #aaaaaa;
 }
 
 .customWindowWidthResize,
@@ -35,17 +35,17 @@
 }
 
 .unselectWindow {
-	background: #7fa2e6 url(../images/headh.gif) repeat-x left top;
-	border: 1px solid #0056e8;
+	background: #a2a2a2 url(../images/headh.png) repeat-x left top;
+	border: 1px solid #565656;
 }
 
 .windowChanged .customWindowTitle {
-    color: #ff7744;
+    color: #aaaaaa;
 }
 
 .customWindowStatus {
 	height: 16px;
-	background: #ECE9D8;
+	background: #ececec;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
@@ -85,7 +85,7 @@
 	float: right;
 	width: 21px;
 	height: 21px;
-	background: url(../images/maximize.gif) no-repeat center center;
+	background: url(../images/maximize.png) no-repeat center center;
 	margin: 1px 3px 0px 0px;
 	border: 0;
 	padding: 0px;
@@ -97,7 +97,7 @@
 	float: right;
 	width: 21px;
 	height: 21px;
-	background: url(../images/restore.gif) no-repeat center center;
+	background: url(../images/restore.png) no-repeat center center;
 	margin: 1px 3px 0px 0px;
 	border: 0;
 	padding: 0px;
@@ -109,7 +109,7 @@
 	float: right;
 	width: 21px;
 	height: 21px;
-	background: url(../images/minimize.gif) no-repeat center center;
+	background: url(../images/minimize.png) no-repeat center center;
 	margin: 1px 3px 0px 0px;
 	border: 0;
 	padding: 0px;
@@ -121,7 +121,7 @@
 	float: right;
 	width: 21px;
 	height: 21px;
-	background: url(../images/close.gif) no-repeat center center;
+	background: url(../images/close.png) no-repeat center center;
 	margin: 1px 3px 0px 0px;
 	border: 0;
 	padding: 0px;
@@ -135,7 +135,7 @@
 	margin: 0px 0px 0px 3px;
 	border: 0px;
 	padding: 3px 0px 0px 26px;
-	background: url(../images/window.gif) no-repeat left bottom;
+	background: url(../images/window.png) no-repeat 0px 2px;
 	
 	font-family: "MS Sans Serif", Verdana, Arial, sans-serif;
 	font-size: 13px;
@@ -150,7 +150,7 @@
 }
 
 .customWindowContent {
-	border: 1px solid #aca899;
+	border: 1px solid #acacac;
 	padding: 8px;
 	background-color: #fff;
 }
