@@ -529,7 +529,7 @@
              
             _wins[id].container.css({
                                 position: 'absolute',
-                                top: null,
+                                top: '',
                                 bottom: paddingBottom + 'px',
                                 height: _wins[id].head.outerHeight() + 'px'
                             });
@@ -727,7 +727,7 @@
                 _wins[id].container.css({
                                             position: 'absolute',
                                             top: _wins[id].top + 'px',
-                                            bottom: null,
+                                            bottom: '',
                                             left: _wins[id].left + 'px',
                                             width: _wins[id].width + 'px',
                                             height: _wins[id].height + 'px'
@@ -801,7 +801,7 @@
                 _wins[id].container.css({
                                             position: 'absolute',
                                             top: _wins[id].top + 'px',
-                                            bottom: null,
+                                            bottom: '',
                                             left: _wins[id].left,
                                             width: _wins[id].width + 'px',
                                             height: _wins[id].height + 'px'
