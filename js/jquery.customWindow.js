@@ -932,8 +932,7 @@
         options = $.extend({
             win: null,
             allowBubbling: false,
-            blockOnViewportEdges: true,
-            disableUserSelect: true
+            blockOnViewportEdges: true
         }, options);
         
         // disable the dragging feature for the element
@@ -970,17 +969,13 @@
     
                 // bind event handler
                 handler.bind('mousedown', function (e) {
-                    if(options.disableUserSelect) {
-                        _rootElement.addClass('customWindowNoDragSelect');
-                    }
+                    _rootElement.addClass('customWindowNoSelect');
 
                     _holdingHandler = true;
 
                     // set mouseup handler on $(document) as it might come from outside handle
                     $(document).bind('mouseup.drag-handler-' + _draggable.id, function(e) {
-                        if(options.disableUserSelect) {
-                            _rootElement.removeClass('customWindowNoDragSelect');
-                        }
+                        _rootElement.removeClass('customWindowNoSelect');
 
                         _holdingHandler = false;
                         // clean up event
@@ -1123,6 +1118,7 @@
         var _lastMouseY;
         var _bubblings2 = {};
         var _holdingHandler = false;
+        var _rootElement = $('body');
         
         options = $.extend({
             win: null,
@@ -1158,6 +1154,7 @@
                     // set mouseup handler on $(document) as it might come from outside handler
                     $(document).bind('mouseup.resize-handler-' + _resizable.id, function(e) {
                         _holdingHandler = false;
+
                         // clean up event
                         $(document).unbind('mouseup.resize-handler-' + _resizable.id);
                     });
@@ -1241,12 +1238,15 @@
                     $(document).bind("mouseup.resize-" + that.id, function(e) {
                         // remove class marking this window as being resized
                         $(that).removeClass('customWindowResizing');
+                        _rootElement.removeClass('customWindowNoSelect');
+
                         // clean up event
                         $(document).unbind("mouseup.resize-" + that.id);
                     });
 
                     // add class marking thiw window as being resized
                     $(this).addClass('customWindowResizing');
+                    _rootElement.addClass('customWindowNoSelect');
 
                     // update track variables
                     _isMouseDown = true;
