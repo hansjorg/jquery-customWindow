@@ -927,11 +927,13 @@
         var _lastElemTop;
         var _lastElemLeft;
         var _holdingHandler = false;
+        var _rootElement = $('body');
         
         options = $.extend({
             win: null,
             allowBubbling: false,
-            blockOnViewportEdges: true
+            blockOnViewportEdges: true,
+            disableUserSelect: true
         }, options);
         
         // disable the dragging feature for the element
@@ -968,10 +970,18 @@
     
                 // bind event handler
                 handler.bind('mousedown', function (e) {
+                    if(options.disableUserSelect) {
+                        _rootElement.addClass('customWindowNoDragSelect');
+                    }
+
                     _holdingHandler = true;
 
                     // set mouseup handler on $(document) as it might come from outside handle
                     $(document).bind('mouseup.drag-handler-' + _draggable.id, function(e) {
+                        if(options.disableUserSelect) {
+                            _rootElement.removeClass('customWindowNoDragSelect');
+                        }
+
                         _holdingHandler = false;
                         // clean up event
                         $(document).unbind('mouseup.drag-handler-' + _draggable.id);
