@@ -187,6 +187,7 @@
             onclose: null,
             onresize: null,
             onresizeend: null,
+            onrestore: null,
             statusBar: true,
             resizeHandle: true,
             resizable: true,
@@ -787,6 +788,11 @@
                                     _wins[id].content.height(_wins[id].container.height() - _wins[id].containerHPad);
                                     _wins[id].content.show();
                                     setBehind(id);
+
+                                    var onrestoreHandler = _wins[id].settings.onrestore;
+                                    if (typeof onrestoreHandler === 'function'){
+                                        onrestoreHandler(_wins[id]);
+                                    }
                                 } 
                             });
                 
@@ -842,6 +848,10 @@
                                     var onresizeendHandler = _wins[id].settings.onresizeend;
                                     if (typeof onresizeendHandler === 'function'){
                                         onresizeendHandler(_wins[id]);
+                                    }
+                                    var onrestoreHandler = _wins[id].settings.onrestore;
+                                    if (typeof onrestoreHandler === 'function'){
+                                        onrestoreHandler(_wins[id]);
                                     }
                                 } 
                             });
