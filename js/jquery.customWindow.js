@@ -241,11 +241,10 @@
             if(_settings.resizable && _settings.resizeHandle) {
                 _customWindowHtml += '<span class="customWindowResize"></span>';
             }
-            _customWindowHtml += '<div style="clear: both"></div>';
             _customWindowHtml += '</div>';
         } else if(_settings.resizable && _settings.resizeHandle) {
             _customWindowHtml += '<span class="customWindowResize"></span>';
-            _customWindowHtml += '<div style="clear: both"></div>';
+            _customWindowHtml += '<div style="clear:both;"></div>';
         }
         _customWindowHtml += '</div>';
 
@@ -256,7 +255,7 @@
             _footer.append(options.footer);
             _html.append(_footer);
         }
-            
+
         _root.append(_html);
                                
         // WINDOW COMPONENT
@@ -272,6 +271,7 @@
         _wins[_uniqueID].restoreIcon = $('.customWindowRestore', _wins[_uniqueID].container);
         _wins[_uniqueID].minimizeIcon = $('.customWindowMinimize', _wins[_uniqueID].container);
         _wins[_uniqueID].maximizeIcon = $('.customWindowMaximize', _wins[_uniqueID].container);
+        _wins[_uniqueID].footer = $('.customWindowFooter', _wins[_uniqueID].container);
                 
         // SET SOME CSS DEFAULT
         _wins[_uniqueID].container.css({
@@ -629,10 +629,19 @@
             _wins[id].resizeIcon.hide();
             _wins[id].resizeWidth.hide();
             _wins[id].resizeHeight.hide();
-                                
+             
+            console.dir(arrayViewPort);
+
+            var targetHeight = arrayViewPort[1] - (_wins[id].container.outerHeight() - _wins[id].container.height());
+            if(_wins[id].footer.length) {
+                targetHeight -= _wins[id].footer.height();
+            }
+
+            console.log('targetHeight: ' + targetHeight);
+
             _wins[id].container.css({
                                         position: 'absolute',
-                                        height: (arrayViewPort[1] - (_wins[id].container.outerHeight() - _wins[id].container.height())) + 'px',
+                                        height: targetHeight + 'px',
                                         width: (arrayViewPort[0] - (_wins[id].container.outerWidth() - _wins[id].container.width())) + 'px',
                                         top: arrayPageScroll[1] + 'px',
                                         left: arrayPageScroll[0] + 'px'
@@ -664,15 +673,12 @@
             };
                         
             _wins[id].container.dragOff();
-                    
             _wins[id].selectWin();
-            
             _wins[id].container.hide();
            
             _root.append(theClone);
-
             theClone.animate({
-                            height: (arrayViewPort[1] - (_wins[id].container.outerHeight() - _wins[id].container.height()) - paddingBottom) + 'px',
+                            height: targetHeight + paddingBottom + 'px',
                             width: (arrayViewPort[0] - (_wins[id].container.outerWidth() - _wins[id].container.width())) + 'px',
                             top: arrayPageScroll[1] + 'px',
                             left: arrayPageScroll[0] + 'px',

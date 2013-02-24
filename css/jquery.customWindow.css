@@ -63,17 +63,17 @@ body.customWindowNoDragSelect {
 
 .customWindowResize {
 	display: block;
-	float: right;
 	width: 16px;
 	height: 16px;
-	background: url(../images/resize.gif) no-repeat center center;
+	background: url(../images/resize.png) no-repeat center center;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -o-user-select: none;
     user-select: none;
-    position: relative;
-    top: -16px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
 }
 
 .customWindowStatus .customWindowResize {
@@ -161,4 +161,14 @@ body.customWindowNoDragSelect {
 	border: 1px solid #acacac;
 	padding: 8px;
 	background-color: #fff;
+}
+
+.customWindowFooter {
+    position: relative;
+    top: 4px;
+    left: -1px;
+}
+
+.unselectWindow .customWindowFooter {
+    display: none;
 }

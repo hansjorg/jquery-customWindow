@@ -27,14 +27,17 @@
         $(function(){
             function openWindow(title) {
                 $.customWindow({
-                    width: 350,
-                    height: 150,
+                    width: 450,
+                    height: 350,
+                    minWidth: 250,
+                    minHeight: 150,
                     appendTo: '#window-container',
                     title: title,
-                    footer: $('<h1>test footer</h1>'),
+                    footer: $('#footer-content').children().clone(),
                     onopen: function (cont, obj) {
-                        cont.html($('#test-content').html());
-                    }
+                        cont.html($('#test-content').clone());
+                    },
+                    statusBar: false
                 });
             }
 
@@ -52,14 +55,17 @@
   </head>
 
   <body>
-    <div style="height: 100%; overflow: auto; position: relative;">
-      <p>
+    <div style="width: 100%; height: 100%; overflow: auto; position: relative;">
+      <div id="window-container" style="width: 100%; height: 100%; background-color: #aaaaaa; overflow: hidden;">
         <a href="javascript: void(0);" class="openWin">Click to open another window</a>
-      </p>
-      <div id="window-container" style="width: 80%; height: 40%; background-color: #aaaaaa; margin-left: 10%; overflow: hidden; position: relative; padding-bottom:30px;">
       </div>
       <div style="display: none;">
-        <div id="test-content"><h3>window contained within a div</h3></div>
+        <div id="test-content"><h3>added window footer</h3></div>
+      </div>
+      <div id="footer-content" style="display: none;">
+        <div style="width: 100%; height: 90x;background-color: #ff0000;text-align: center;">
+          <h1 style="margin: 0px auto;">test footer</h1>
+        </div>
       </div>
     </div>
   </body>
