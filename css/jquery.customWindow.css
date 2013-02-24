@@ -169,6 +169,6 @@ body.customWindowNoDragSelect {
     left: -1px;
 }
 
-.unselectWindow .customWindowFooter {
+.customWindowMinimized .customWindowFooter {
     display: none;
 }
