@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>jQuery customWindow plugin (contained in div test)</title>
+    <link rel="stylesheet" href="../css/jquery.customWindow.css" type="text/css"/>
+    <style>
+      html, body {
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        overflow: hidden;
+      }
+      .code {
+        border: 1px solid #CC0000;
+        background: #FFFFCC;
+        padding: 10px;
+        width: 40%;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+      }
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.corner.js"></script>
+    <script type="text/javascript" src="../js/jquery.customWindow.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            function openWindow(title) {
+                $.customWindow({
+                    width: 350,
+                    height: 150,
+                    appendTo: '#window-container',
+                    title: title,
+                    footer: $('<h1>test footer</h1>'),
+                    onopen: function (cont, obj) {
+                        cont.html($('#test-content').html());
+                    }
+                });
+            }
+
+	        var i = 1;
+            var win = openWindow('Window ' + i); 
+	
+	        $('a.openWin').each(function () {
+		        $(this).bind('click', function (e) { 
+                    i++;
+                    openWindow('Window ' + i);
+				});
+			});
+        });
+    </script>
+  </head>
+
+  <body>
+    <div style="height: 100%; overflow: auto; position: relative;">
+      <p>
+        <a href="javascript: void(0);" class="openWin">Click to open another window</a>
+      </p>
+      <div id="window-container" style="width: 80%; height: 40%; background-color: #aaaaaa; margin-left: 10%; overflow: hidden; position: relative; padding-bottom:30px;">
+      </div>
+      <div style="display: none;">
+        <div id="test-content"><h3>window contained within a div</h3></div>
+      </div>
+    </div>
+  </body>
+</html>

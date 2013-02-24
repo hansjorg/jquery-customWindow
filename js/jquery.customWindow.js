@@ -182,6 +182,7 @@
             minHeight: 200,
             title: 'Custom Window',
             appendTo: 'body',
+            footer: null,
             onopen: null,
             onclose: null,
             onresize: null,
@@ -246,8 +247,16 @@
             _customWindowHtml += '<div style="clear: both"></div>';
         }
         _customWindowHtml += '</div>';
+
+        var _html = $(_customWindowHtml);
+
+        if(options.footer) {
+            var _footer = $('<div>').addClass('customWindowFooter');
+            _footer.append(options.footer);
+            _html.append(_footer);
+        }
             
-        _root.append(_customWindowHtml);
+        _root.append(_html);
                                
         // WINDOW COMPONENT
         _wins[_uniqueID].container = $('#' + _uniqueID);
