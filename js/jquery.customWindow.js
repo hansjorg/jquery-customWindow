@@ -503,6 +503,7 @@
         };
         
         _wins[_uniqueID].closeIcon.bind('click', function (e) {
+            e.stopPropagation();
             
             closeWin(_uniqueID);
             
@@ -522,6 +523,7 @@
 
             var theClone = _wins[id].container.clone();
             theClone.find('.customWindowContent').empty();
+            theClone.find('.customWindowFooter').empty();
             
             _wins[id].min = true;
                     
@@ -591,7 +593,8 @@
         };
         
         _wins[_uniqueID].minimizeIcon.bind('click', function (e) {
-            
+            e.stopPropagation();
+ 
             minimizeWin(_uniqueID);
             
             fixSelect();
@@ -615,7 +618,8 @@
             
             var theClone = _wins[id].container.clone();
             theClone.find('.customWindowContent').empty();
-            
+            theClone.find('.customWindowFooter').empty();
+
             _wins[id].max = true;
             _wins[id].min = false;
             
@@ -702,7 +706,8 @@
         };
         
         _wins[_uniqueID].maximizeIcon.bind('click', function (e) {
-            
+            e.stopPropagation();
+ 
             maximizeWin(_uniqueID);
             
             fixSelect();
@@ -735,7 +740,8 @@
                 
                 var theClone = _wins[id].container.clone();
                 theClone.find('.customWindowContent').empty();
-                
+                theClone.find('.customWindowFooter').empty();
+ 
                 _wins[id].container.css({
                                             position: 'absolute',
                                             top: _wins[id].top + 'px',
@@ -804,6 +810,7 @@
                 
                 var theClone = _wins[id].container.clone();
                 theClone.find('.customWindowContent').empty();
+                theClone.find('.customWindowFooter').empty();
 
                 _wins[id].content.hide();
                 _wins[id].status.show();
@@ -863,7 +870,8 @@
         };
 
         _wins[_uniqueID].restoreIcon.bind('click', function (e) {
-            
+            e.stopPropagation();
+
             restoreWin(_uniqueID);
             
             fixSelect();
@@ -873,6 +881,8 @@
         });
         
         _wins[_uniqueID].head.bind('dblclick', function (e) {
+            e.stopPropagation();
+
             if (_wins[_uniqueID].min === true) {
                 if (_wins[_uniqueID].max === true) {
                     _wins[_uniqueID].max = false;
